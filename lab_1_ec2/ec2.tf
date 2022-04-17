@@ -20,15 +20,3 @@ resource "aws_instance" "lab" {
   user_data                   = file("webserver.sh")
   vpc_security_group_ids      = [aws_vpc.default.default_security_group_id]
 }
-
-////resource "aws_network_interface" "eni-07c325361c208a1f6" {
-////    subnet_id         = "subnet-087175fac1ecfef7a"
-////    private_ips       = ["172.31.90.249"]
-////    security_groups   = ["sg-0b2c7ce21ff7abce6"]
-////    source_dest_check = true
-////    attachment {
-////        instance     = "i-0670695e70906c397"
-////        device_index = 0
-////    }
-////}
-////
