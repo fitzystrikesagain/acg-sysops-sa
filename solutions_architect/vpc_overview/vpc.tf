@@ -25,3 +25,11 @@ resource "aws_subnet" "acg_subnet" {
     Name = "10.0.${count.index + 1}.0 - ${local.subnets[count.index]}"
   }
 }
+
+resource "aws_internet_gateway" "acg_gateway" {
+  vpc_id = aws_vpc.acloudguru.id
+
+  tags = {
+    Name = "acg-igw"
+  }
+}
