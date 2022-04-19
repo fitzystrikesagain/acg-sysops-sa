@@ -34,8 +34,27 @@ resource "aws_internet_gateway" "acg_gateway" {
   }
 }
 
+resource "aws_route_table" "acg_route" {
+  vpc_id = aws_vpc.acloudguru.id
+
+  tags = {
+    Name = "MyPublicRoute"
+  }
+}
+
 resource "aws_route" "outbound_internet" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.acg_gateway.id
   route_table_id         = aws_vpc.acloudguru.main_route_table_id
+}
+
+resource "aws_route_table_association" "acg_subnet_associations" {
+  count          = length(local.subnets)
+  route_table_id = aws_route_table.acg_route.id
+  subnet_id      = aws_subnet.acg_subnet[count.index].id
+}
+
+resource "aws_default_route_table" "acg_default_route_table" {
+  default_route_table_id = ""
+
 }
