@@ -33,3 +33,9 @@ resource "aws_internet_gateway" "acg_gateway" {
     Name = "acg-igw"
   }
 }
+
+resource "aws_route" "outbound_internet" {
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.acg_gateway.id
+  route_table_id         = aws_vpc.acloudguru.main_route_table_id
+}
